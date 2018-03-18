@@ -24,11 +24,11 @@ def user_list(request):
         users_serializer = UsersSerializer(users, many=True)
         return JSONResponse(users_serializer.data)
 
-    # elif request.method == 'POST':
-    #     game_data = JSONParser().parse(request)
-    #     game_serializer = GameSerializer(data=game_data)
-    #     if game_serializer.is_valid():
-    #         game_serializer.save()
-    #         return JSONResponse(game_serializer.data, status=status.HTTP_201_CREATED)
-    #     return JSONResponse(game_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'POST':
+        user_data = JSONParser().parse(request)
+        user_serializer = UsersSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return JSONResponse(user_serializer.data, status=status.HTTP_201_CREATED)
+        return JSONResponse(game_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
