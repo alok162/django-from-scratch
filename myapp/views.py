@@ -35,8 +35,9 @@ def user_list(request):
         return JSONResponse(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-@csrf_exempt
+@api_view(['GET', 'PUT'])
 def user_detail(request,pk):
+	print '#############',
 	try:
 		users = Users.objects.get(pk=pk)
  	except Users.DoesNotExist:
@@ -44,7 +45,6 @@ def user_detail(request,pk):
 
 	if request.method == 'GET':
 		user_detail_serializer = UsersSerializer(users)
-		print '#############', user_detail_serializer.data
 		return JsonResponse(user_detail_serializer.data)
 
  	if request.method == 'PUT':
