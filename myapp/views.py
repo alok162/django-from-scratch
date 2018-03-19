@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
@@ -8,6 +9,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from myapp.models import Users
 from myapp.serializers import UsersSerializer
+from django.http import HttpResponse, JsonResponse
 
 
 class JSONResponse(HttpResponse):
@@ -17,7 +19,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-@csrf_exempt
+@api_view(['GET', 'POST'])
 def user_list(request):
     if request.method == 'GET':
         users = Users.objects.all()
@@ -42,7 +44,8 @@ def user_detail(request,pk):
 
 	if request.method == 'GET':
 		user_detail_serializer = UsersSerializer(users)
-		return user_detail_serializer.data
+		print '#############', user_detail_serializer.data
+		return JsonResponse(user_detail_serializer.data)
 
  	if request.method == 'PUT':
 		user_data = JSONParser().parse(request)
