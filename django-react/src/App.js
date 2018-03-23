@@ -14,9 +14,9 @@ render() {
 
 onClick(ev) {
   console.log("Sending a GET API Call !!!");
-  axios.get('/users')
+  axios.get('/users/')
   .then(res => {
-          console.log(res.json())
+          console.log(res.data)
   }).then(response => {
       console.log(JSON.stringify(response));
   })    
